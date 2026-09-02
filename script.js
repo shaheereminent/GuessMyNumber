@@ -86,4 +86,5 @@ document.querySelector('.again').addEventListener('click', function () {
   randomSecretNumber = Math.trunc(Math.random() * 20 + 1);
   // resetting secret number back to a "question mark"
   secretNumberElement.textContent = '?';
+  backgroundColor.style.backgroundColor = '#222';
 });
