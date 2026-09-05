@@ -35,6 +35,13 @@ document.querySelector('.check').addEventListener('click', function () {
   // checking if user guess is not a number
   if (!userGuess) {
     messageElement.textContent = '⛔ No Number!';
+    return;
+  }
+
+  // 2. Check if out of range
+  if (userGuess > 20 || userGuess < 1) {
+    messageElement.textContent = '⚠️ Number must be between 1 and 20!';
+    return; // Stop execution here
   }
 
   // checking if user guess is correct
@@ -84,7 +91,7 @@ document.querySelector('.again').addEventListener('click', function () {
   score = 20;
   scoreElement.textContent = score;
   // re-initializing a new random number
-  randomSecretNumber = Math.trunc(Math.random() * 20 + 1);
+  console.log((randomSecretNumber = Math.trunc(Math.random() * 20 + 1)));
   // resetting secret number back to a "question mark"
   secretNumberElement.textContent = '?';
   backgroundColor.style.backgroundColor = '#222';
