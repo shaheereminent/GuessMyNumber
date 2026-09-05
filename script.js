@@ -24,6 +24,7 @@ let guessInputElement = document.querySelector('.guess');
 
 // creating score variable to keep track of it
 let score = 20;
+let highScore = 0;
 
 // getting players name
 // prompt('Enter your name: ');
@@ -51,10 +52,9 @@ document.querySelector('.check').addEventListener('click', function () {
     backgroundColor.style.backgroundColor = '#60b347';
     secretNumberElement.style.width = '30rem';
     // checking if user current score is higher than previous score
-    if (
-      Number(scoreElement.textContent) > Number(highScoreElement.textContent)
-    ) {
-      highScoreElement.textContent = scoreElement.textContent;
+    if (score > highScore) {
+      highScore = score;
+      highScoreElement.textContent = highScore;
     }
   } else if (userGuess > randomSecretNumber) {
     if (score > 1) {
