@@ -28,6 +28,8 @@ let score = 20;
 // getting players name
 // prompt('Enter your name: ');
 
+// initializing game state
+
 // clicking check button to check user guessed value
 document.querySelector('.check').addEventListener('click', function () {
   const userGuess = Number(guessInputElement.value);
@@ -77,6 +79,7 @@ document.querySelector('.check').addEventListener('click', function () {
 
 // clicking again button to reset the game state
 document.querySelector('.again').addEventListener('click', function () {
+  guessInputElement.value = '';
   // resetting message for the user
   messageElement.textContent = 'Start guessing...';
   // reset score state value and in dom as well
