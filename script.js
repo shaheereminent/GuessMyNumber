@@ -28,8 +28,6 @@ let score = 20;
 // getting players name
 // prompt('Enter your name: ');
 
-// initializing game state
-
 // clicking check button to check user guessed value
 document.querySelector('.check').addEventListener('click', function () {
   const userGuess = Number(guessInputElement.value);
