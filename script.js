@@ -7,8 +7,10 @@ console.log(randomSecretNumber);
 // selecting entire body background color
 let backgroundColor = document.querySelector('body');
 
-// selecting start guessing element
-let messageElement = document.querySelector('.message');
+// selecting display message element
+const displayMessage = function (message) {
+  document.querySelector('.message').textContent = message;
+};
 
 // selecting secret number
 let secretNumberElement = document.querySelector('.number');
@@ -35,19 +37,19 @@ document.querySelector('.check').addEventListener('click', function () {
 
   // checking if user guess is not a number
   if (!userGuess) {
-    messageElement.textContent = '⛔ No Number!';
+    displayMessage('⛔ No Number!');
     return;
   }
 
-  // 2. Check if out of range
+  // check if guess is out of range
   if (userGuess > 20 || userGuess < 1) {
-    messageElement.textContent = '⚠️ Number must be between 1 and 20!';
-    return; // Stop execution here
+    displayMessage('⚠️ Number must be between 1 and 20!');
+    return;
   }
 
   // checking if user guess is correct
   if (userGuess === randomSecretNumber) {
-    messageElement.textContent = '🎉 Correct Number!';
+    displayMessage('🎉 Correct Number!');
     secretNumberElement.textContent = randomSecretNumber;
     backgroundColor.style.backgroundColor = '#60b347';
     secretNumberElement.style.width = '30rem';
@@ -56,29 +58,18 @@ document.querySelector('.check').addEventListener('click', function () {
       highScore = score;
       highScoreElement.textContent = highScore;
     }
-  } else if (userGuess > randomSecretNumber) {
-    if (score > 1) {
-      messageElement.textContent = '📈 Too high!';
-      score--;
-      scoreElement.textContent = score;
-    } else {
-      messageElement.textContent = '💥 You lost the game!';
-      score = 0;
-      scoreElement.textContent = score;
-    }
-  } else if (userGuess < randomSecretNumber) {
-    if (score > 1) {
-      messageElement.textContent = '📉 Too low!';
-      score--;
-      scoreElement.textContent = score;
-    } else {
-      messageElement.textContent = '💥 You lost the game!';
-      score = 0;
-      scoreElement.textContent = score;
-    }
   } else if (userGuess !== randomSecretNumber) {
-    score--;
-    scoreElement.textContent = score;
+    if (score > 1) {
+      displayMessage(
+        userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!',
+      );
+      score--;
+      scoreElement.textContent = score;
+    } else {
+      displayMessage('💥 You lost the game!');
+      score = 0;
+      scoreElement.textContent = score;
+    }
   }
 });
 
@@ -86,7 +77,7 @@ document.querySelector('.check').addEventListener('click', function () {
 document.querySelector('.again').addEventListener('click', function () {
   guessInputElement.value = '';
   // resetting message for the user
-  messageElement.textContent = 'Start guessing...';
+  displayMessage('Start guessing...');
   // reset score state value and in dom as well
   score = 20;
   scoreElement.textContent = score;
