@@ -18,6 +18,9 @@ const displayMessage = function (message) {
 };
 
 // selecting secret number
+const highestScore = function (highScore) {
+  document.querySelector('.number').textContent = highScore;
+};
 let secretNumberElement = document.querySelector('.number');
 
 // selecting highScore element
@@ -57,9 +60,10 @@ document.querySelector('.check').addEventListener('click', function () {
   // checking if user guess is correct
   if (userGuess === randomSecretNumber) {
     displayMessage('🎉 Correct Number!');
+    highestScore(randomSecretNumber);
     secretNumberElement.textContent = randomSecretNumber;
     backgroundColor.style.backgroundColor = '#60b347';
-    secretNumberElement.style.width = '30rem';
+    document.querySelector('.number').style.width = '30rem';
     // checking if user current score is higher than previous score
     if (score > highScore) {
       highScore = score;
@@ -92,6 +96,7 @@ document.querySelector('.again').addEventListener('click', function () {
   randomSecretNumber = generateRandomNumber();
   console.log(randomSecretNumber);
   // resetting secret number back to a "question mark"
-  secretNumberElement.textContent = '?';
+  highestScore('?');
+  document.querySelector('.number').style.width = '15rem';
   backgroundColor.style.backgroundColor = '#222';
 });
