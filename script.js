@@ -24,7 +24,9 @@ let secretNumberElement = document.querySelector('.number');
 let highScoreElement = document.querySelector('.highscore');
 
 // selecting score element
-let scoreElement = document.querySelector('.score');
+const gameScore = function (score) {
+  document.querySelector('.score').textContent = score;
+};
 
 // selecting guess input element
 let guessInputElement = document.querySelector('.guess');
@@ -69,11 +71,11 @@ document.querySelector('.check').addEventListener('click', function () {
         userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!',
       );
       score--;
-      scoreElement.textContent = score;
+      gameScore(score);
     } else {
       displayMessage('💥 You lost the game!');
       score = 0;
-      scoreElement.textContent = score;
+      gameScore(score);
     }
   }
 });
@@ -85,9 +87,10 @@ document.querySelector('.again').addEventListener('click', function () {
   displayMessage('Start guessing...');
   // reset score state value and in dom as well
   score = 20;
-  scoreElement.textContent = score;
+  gameScore(score);
   // re-initializing a new random number
   randomSecretNumber = generateRandomNumber();
+  console.log(randomSecretNumber);
   // resetting secret number back to a "question mark"
   secretNumberElement.textContent = '?';
   backgroundColor.style.backgroundColor = '#222';
