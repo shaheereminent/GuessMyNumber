@@ -1,7 +1,12 @@
 'use strict';
 
 // generating number secret number
-let randomSecretNumber = Math.trunc(Math.random() * 20 + 1);
+
+const generateRandomNumber = function () {
+  return Math.trunc(Math.random() * 20 + 1);
+};
+
+let randomSecretNumber = generateRandomNumber();
 console.log(randomSecretNumber);
 
 // selecting entire body background color
@@ -82,7 +87,7 @@ document.querySelector('.again').addEventListener('click', function () {
   score = 20;
   scoreElement.textContent = score;
   // re-initializing a new random number
-  console.log((randomSecretNumber = Math.trunc(Math.random() * 20 + 1)));
+  randomSecretNumber = generateRandomNumber();
   // resetting secret number back to a "question mark"
   secretNumberElement.textContent = '?';
   backgroundColor.style.backgroundColor = '#222';
