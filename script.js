@@ -11,6 +11,12 @@ const DOM = {
   againBtn: document.querySelector('.again')
 }
 
+// styling functions
+const setGameStyle = function(isWin) {
+  DOM.body.style.backgroundColor = isWin ? '#60b347' : '#222'
+  DOM.number.style.width = isWin ? '30rem' : '15rem'
+}
+
 // generating number secret number
 
 const generateRandomNumber = function () {
@@ -61,8 +67,7 @@ document.querySelector('.check').addEventListener('click', function () {
     displayMessage('🎉 Correct Number!');
     highestScore(randomSecretNumber);
     DOM.number.textContent = randomSecretNumber
-    DOM.body.style.backgroundColor = '#60b347'
-    DOM.number.style.width = '30rem'
+    setGameStyle(true)
     // checking if user current score is higher than previous score
     if (score > highScore) {
       highScore = score;
@@ -96,6 +101,5 @@ document.querySelector('.again').addEventListener('click', function () {
   console.log(randomSecretNumber);
   // resetting secret number back to a "question mark"
   highestScore('?');
-  DOM.number.style.width = '15rem'
-  DOM.body.style.backgroundColor = '#222'
+  setGameStyle(false)
 });
