@@ -32,22 +32,17 @@ const highestScore = function (highScore) {
 
 // selecting score element
 const gameScore = function (score) {
-  document.querySelector('.score').textContent = score;
+  DOM.score.textContent = score
 };
 
-// selecting guess input element
-let guessInputElement = document.querySelector('.guess');
 
 // creating score variable to keep track of it
 let score = 20;
 let highScore = 0;
 
-// getting players name
-// prompt('Enter your name: ');
-
 // clicking check button to check user guessed value
 document.querySelector('.check').addEventListener('click', function () {
-  const userGuess = Number(guessInputElement.value);
+  const userGuess = Number(DOM.guess.value);
 
   // checking if user guess is not a number
   if (!userGuess) {
@@ -67,7 +62,7 @@ document.querySelector('.check').addEventListener('click', function () {
     highestScore(randomSecretNumber);
     DOM.number.textContent = randomSecretNumber
     DOM.body.style.backgroundColor = '#60b347'
-    document.querySelector('.number').style.width = '30rem';
+    DOM.number.style.width = '30rem'
     // checking if user current score is higher than previous score
     if (score > highScore) {
       highScore = score;
@@ -90,7 +85,7 @@ document.querySelector('.check').addEventListener('click', function () {
 
 // clicking again button to reset the game state
 document.querySelector('.again').addEventListener('click', function () {
-  guessInputElement.value = '';
+  DOM.guess.value = '';
   // resetting message for the user
   displayMessage('Start guessing...');
   // reset score state value and in dom as well
@@ -101,6 +96,6 @@ document.querySelector('.again').addEventListener('click', function () {
   console.log(randomSecretNumber);
   // resetting secret number back to a "question mark"
   highestScore('?');
-  document.querySelector('.number').style.width = '15rem';
+  DOM.number.style.width = '15rem'
   DOM.body.style.backgroundColor = '#222'
 });
