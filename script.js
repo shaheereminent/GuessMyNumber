@@ -11,6 +11,16 @@ const DOM = {
   againBtn: document.querySelector('.again')
 }
 
+// configuration object
+
+const CONFIG = {
+  MIN: 1,
+  MAX: 2,
+  INITIAL_SCORE: 20,
+  WIN_COLOR: '#60b347',
+  LOSE_COLOR: '#222'
+}
+
 // styling functions
 const setGameStyle = function(isWin) {
   DOM.body.style.backgroundColor = isWin ? '#60b347' : '#222'
@@ -36,7 +46,7 @@ const resetGame = function() {
 // generating number secret number
 
 const generateRandomNumber = function () {
-  return Math.trunc(Math.random() * 20 + 1);
+  return Math.trunc(Math.random() * CONFIG.MAX + CONFIG.MIN);
 };
 
 let randomSecretNumber = generateRandomNumber();
@@ -73,7 +83,7 @@ document.querySelector('.check').addEventListener('click', function () {
   }
 
   // check if guess is out of range
-  if (userGuess > 20 || userGuess < 1) {
+  if (userGuess > CONFIG.MAX || userGuess < CONFIG.MIN) {
     displayMessage('⚠️ Number must be between 1 and 20!');
     return;
   }
