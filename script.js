@@ -1,5 +1,16 @@
 'use strict';
 
+const DOM = {
+  body: document.querySelector('body'),
+  message: document.querySelector('.message'),
+  number: document.querySelector('.number'),
+  highscore: document.querySelector('.highscore'),
+  score: document.querySelector('.score'),
+  guess: document.querySelector('.guess'),
+  checkBtn: document.querySelector('.check'),
+  againBtn: document.querySelector('.again')
+}
+
 // generating number secret number
 
 const generateRandomNumber = function () {
@@ -9,22 +20,15 @@ const generateRandomNumber = function () {
 let randomSecretNumber = generateRandomNumber();
 console.log(randomSecretNumber);
 
-// selecting entire body background color
-let backgroundColor = document.querySelector('body');
-
 // selecting display message element
 const displayMessage = function (message) {
-  document.querySelector('.message').textContent = message;
+  DOM.message.textContent = message
 };
 
 // selecting secret number
 const highestScore = function (highScore) {
-  document.querySelector('.number').textContent = highScore;
+  DOM.number.textContent = highScore
 };
-let secretNumberElement = document.querySelector('.number');
-
-// selecting highScore element
-let highScoreElement = document.querySelector('.highscore');
 
 // selecting score element
 const gameScore = function (score) {
@@ -61,13 +65,13 @@ document.querySelector('.check').addEventListener('click', function () {
   if (userGuess === randomSecretNumber) {
     displayMessage('🎉 Correct Number!');
     highestScore(randomSecretNumber);
-    secretNumberElement.textContent = randomSecretNumber;
-    backgroundColor.style.backgroundColor = '#60b347';
+    DOM.number.textContent = randomSecretNumber
+    DOM.body.style.backgroundColor = '#60b347'
     document.querySelector('.number').style.width = '30rem';
     // checking if user current score is higher than previous score
     if (score > highScore) {
       highScore = score;
-      highScoreElement.textContent = highScore;
+      DOM.highscore.textContent = highScore
     }
   } else if (userGuess !== randomSecretNumber) {
     if (score > 1) {
@@ -98,5 +102,5 @@ document.querySelector('.again').addEventListener('click', function () {
   // resetting secret number back to a "question mark"
   highestScore('?');
   document.querySelector('.number').style.width = '15rem';
-  backgroundColor.style.backgroundColor = '#222';
+  DOM.body.style.backgroundColor = '#222'
 });
