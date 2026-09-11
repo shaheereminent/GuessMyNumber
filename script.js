@@ -17,6 +17,22 @@ const setGameStyle = function(isWin) {
   DOM.number.style.width = isWin ? '30rem' : '15rem'
 }
 
+// single function for resetting game
+
+const resetGame = function() {
+  // reset game state
+  score = 20;
+  randomSecretNumber = generateRandomNumber();
+
+  // reset game ui
+  DOM.guess.value = '';
+  displayMessage('Start guessing...');
+  gameScore(score);
+  console.log(randomSecretNumber);
+  highestScore('?');
+  setGameStyle(false)
+}
+
 // generating number secret number
 
 const generateRandomNumber = function () {
@@ -89,17 +105,4 @@ document.querySelector('.check').addEventListener('click', function () {
 });
 
 // clicking again button to reset the game state
-document.querySelector('.again').addEventListener('click', function () {
-  DOM.guess.value = '';
-  // resetting message for the user
-  displayMessage('Start guessing...');
-  // reset score state value and in dom as well
-  score = 20;
-  gameScore(score);
-  // re-initializing a new random number
-  randomSecretNumber = generateRandomNumber();
-  console.log(randomSecretNumber);
-  // resetting secret number back to a "question mark"
-  highestScore('?');
-  setGameStyle(false)
-});
+DOM.againBtn.addEventListener('click', resetGame)
