@@ -15,36 +15,25 @@ const DOM = {
 
 const CONFIG = {
   MIN: 1,
-  MAX: 2,
+  MAX: 20,
   INITIAL_SCORE: 20,
   WIN_COLOR: '#60b347',
-  LOSE_COLOR: '#222'
+  LOSE_COLOR: '#222',
+  WIN_WIDTH: '30rem',
+  LOSE_WIDTH: '15rem'
 }
+
+// creating score variable to keep track of it
+let score = CONFIG.INITIAL_SCORE;
+let highScore = 0;
 
 // styling functions
 const setGameStyle = function(isWin) {
-  DOM.body.style.backgroundColor = isWin ? '#60b347' : '#222'
-  DOM.number.style.width = isWin ? '30rem' : '15rem'
-}
-
-// single function for resetting game
-
-const resetGame = function() {
-  // reset game state
-  score = 20;
-  randomSecretNumber = generateRandomNumber();
-
-  // reset game ui
-  DOM.guess.value = '';
-  displayMessage('Start guessing...');
-  gameScore(score);
-  console.log(randomSecretNumber);
-  highestScore('?');
-  setGameStyle(false)
+  DOM.body.style.backgroundColor = isWin ? CONFIG.WIN_COLOR : CONFIG.LOSE_COLOR
+  DOM.number.style.width = isWin ? CONFIG.WIN_WIDTH : CONFIG.LOSE_WIDTH
 }
 
 // generating number secret number
-
 const generateRandomNumber = function () {
   return Math.trunc(Math.random() * CONFIG.MAX + CONFIG.MIN);
 };
@@ -58,60 +47,85 @@ const displayMessage = function (message) {
 };
 
 // selecting secret number
-const highestScore = function (highScore) {
-  DOM.number.textContent = highScore
+const showSecretNumber = function (value) {
+  DOM.number.textContent = value
 };
 
 // selecting score element
-const gameScore = function (score) {
-  DOM.score.textContent = score
+const updateScoreDisplay = function (value) {
+  DOM.score.textContent = value
 };
 
+const updateHighScore = function(value) {
+  DOM.highscore.textContent = value
+}
 
-// creating score variable to keep track of it
-let score = 20;
-let highScore = 0;
+// single function for resetting game
+
+const resetGame = function() {
+  // reset game state
+  score = CONFIG.INITIAL_SCORE;
+  randomSecretNumber = generateRandomNumber();
+
+  // reset game ui
+  DOM.guess.value = '';
+  displayMessage('Start guessing...');
+  updateScoreDisplay(score);
+  console.log(randomSecretNumber);
+  showSecretNumber('?');
+  setGameStyle(false)
+}
+
+// Separate win/lose functions
+
+const handleWin = function() {
+  displayMessage('🎉 Correct Number!');
+  showSecretNumber(randomSecretNumber);
+  setGameStyle(true)
+
+  // update high score
+  if (score > highScore) {
+      highScore = score;
+      updateHighScore(highScore)
+    }
+}
+
+const handleLose = function(userGuess) {
+  if (score > 1) {
+    displayMessage(
+      userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!',
+    );
+    score --
+    updateScoreDisplay(score)
+  } else {
+    displayMessage('💥 You lost the game!');
+    score = 0
+    updateScoreDisplay(score)
+  }
+}
 
 // clicking check button to check user guessed value
-document.querySelector('.check').addEventListener('click', function () {
-  const userGuess = Number(DOM.guess.value);
-
-  // checking if user guess is not a number
-  if (!userGuess) {
-    displayMessage('⛔ No Number!');
-    return;
-  }
-
-  // check if guess is out of range
-  if (userGuess > CONFIG.MAX || userGuess < CONFIG.MIN) {
-    displayMessage('⚠️ Number must be between 1 and 20!');
-    return;
-  }
-
-  // checking if user guess is correct
-  if (userGuess === randomSecretNumber) {
-    displayMessage('🎉 Correct Number!');
-    highestScore(randomSecretNumber);
-    DOM.number.textContent = randomSecretNumber
-    setGameStyle(true)
-    // checking if user current score is higher than previous score
-    if (score > highScore) {
-      highScore = score;
-      DOM.highscore.textContent = highScore
+DOM.checkBtn.addEventListener('click', function () {
+    const userGuess = Number(DOM.guess.value);
+    
+    // Validate: No number
+    if (!userGuess) {
+        displayMessage('⛔ No Number!');
+        return;
     }
-  } else if (userGuess !== randomSecretNumber) {
-    if (score > 1) {
-      displayMessage(
-        userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!',
-      );
-      score--;
-      gameScore(score);
+    
+    // Validate: Out of range
+    if (userGuess > CONFIG.MAX || userGuess < CONFIG.MIN) {
+        displayMessage(`⚠️ Number must be between ${CONFIG.MIN} and ${CONFIG.MAX}!`);
+        return;
+    }
+    
+    // Check guess
+    if (userGuess === randomSecretNumber) {
+        handleWin();
     } else {
-      displayMessage('💥 You lost the game!');
-      score = 0;
-      gameScore(score);
+      handleLose(userGuess)
     }
-  }
 });
 
 // clicking again button to reset the game state
