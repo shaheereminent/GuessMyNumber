@@ -8,7 +8,9 @@ const DOM = {
   score: document.querySelector('.score'),
   guess: document.querySelector('.guess'),
   checkBtn: document.querySelector('.check'),
-  againBtn: document.querySelector('.again')
+  againBtn: document.querySelector('.again'),
+  player1: document.querySelector('.player1'),
+  player2: document.querySelector('.player2'),
 }
 
 // configuration object
@@ -22,6 +24,46 @@ const CONFIG = {
   WIN_WIDTH: '30rem',
   LOSE_WIDTH: '15rem'
 }
+
+// default players name
+const cuteGameNames = [
+  "Sprout",
+  "Mochi",
+  "Pippin",
+  "Glimmer",
+  "Cozy",
+  "Fable",
+  "Noodle",
+  "Bubbles",
+  "Chirpy",
+  "Snug"
+];
+
+// default names
+const playerNames = [] 
+
+// assigning random names to player from built-in game
+for (let i = 0; i < playerNames.length; i++) {
+  let randomName = Math.trunc(Math.random() * cuteGameNames.length + 1);
+  
+  console.log(playerNames)
+  playerNames[i] = cuteGameNames[randomName]
+  console.log(playerNames)
+}
+
+for (let i = 0; i < 2; i++) {
+  // get players name
+  const getPlayersName = prompt('Please write your name: ')
+
+  // update players name if user give name
+  if (getPlayersName) {
+    playerNames[i] = getPlayersName
+  }
+  
+  console.log(getPlayersName)
+}
+
+console.log(playerNames)
 
 // creating score variable to keep track of it
 let score = CONFIG.INITIAL_SCORE;
