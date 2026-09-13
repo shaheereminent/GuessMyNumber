@@ -117,3 +117,23 @@ h1 {
 .label-score {
   margin-bottom: 2rem;
 }
+
+.players {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.player1, .player2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.player1.active, .player2.active {
+  background: #60b347;
+  color: white;
+}
