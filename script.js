@@ -44,13 +44,12 @@ const playerNames = []
 
 // assigning random names to player from built-in game
 for (let i = 0; i < 2; i++) {
+  // set default name
   let randomName = Math.trunc(Math.random() * cuteGameNames.length);
   playerNames[i] = cuteGameNames[randomName]
   console.log(randomName)
-}
 
-for (let i = 0; i < 2; i++) {
-  // get players name
+  // ask user (override if given)
   const getPlayersName = prompt('Please write your name: ')
 
   // update players name if user give name
@@ -60,8 +59,6 @@ for (let i = 0; i < 2; i++) {
   
   console.log(getPlayersName)
 }
-
-console.log(playerNames)
 
 // creating score variable to keep track of it
 let score = CONFIG.INITIAL_SCORE;
