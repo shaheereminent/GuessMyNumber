@@ -43,12 +43,10 @@ const cuteGameNames = [
 const playerNames = [] 
 
 // assigning random names to player from built-in game
-for (let i = 0; i < playerNames.length; i++) {
-  let randomName = Math.trunc(Math.random() * cuteGameNames.length + 1);
-  
-  console.log(playerNames)
+for (let i = 0; i < 2; i++) {
+  let randomName = Math.trunc(Math.random() * cuteGameNames.length);
   playerNames[i] = cuteGameNames[randomName]
-  console.log(playerNames)
+  console.log(randomName)
 }
 
 for (let i = 0; i < 2; i++) {
