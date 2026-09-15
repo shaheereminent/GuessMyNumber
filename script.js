@@ -22,11 +22,12 @@ const CONFIG = {
   WIN_COLOR: '#60b347',
   LOSE_COLOR: '#222',
   WIN_WIDTH: '30rem',
-  LOSE_WIDTH: '15rem'
+  LOSE_WIDTH: '15rem',
+  MAX_PLAYERS: 2
 }
 
 // default players name
-const cuteGameNames = [
+const defaultPlayersName = [
   "Sprout",
   "Mochi",
   "Pippin",
@@ -39,30 +40,12 @@ const cuteGameNames = [
   "Snug"
 ];
 
-// default names
-const playerNames = [] 
-
-// assigning random names to player from built-in game
-for (let i = 0; i < 2; i++) {
-  // set default name
-  let randomName = Math.trunc(Math.random() * cuteGameNames.length);
-  playerNames[i] = cuteGameNames[randomName]
-  console.log(randomName)
-
-  // ask user (override if given)
-  const getPlayersName = prompt('Please write your name: ')
-
-  // update players name if user give name
-  if (getPlayersName) {
-    playerNames[i] = getPlayersName
-  }
-  
-  console.log(getPlayersName)
-}
-
 // creating score variable to keep track of it
 let score = CONFIG.INITIAL_SCORE;
 let highScore = 0;
+
+// default names
+const playerNames = [] 
 
 // styling functions
 const setGameStyle = function(isWin) {
@@ -70,13 +53,36 @@ const setGameStyle = function(isWin) {
   DOM.number.style.width = isWin ? CONFIG.WIN_WIDTH : CONFIG.LOSE_WIDTH
 }
 
+// pick a random name from the default playername
+const getRandomName = function() {
+  const index = Math.trunc(Math.random() * defaultPlayersName.length)
+  return defaultPlayersName[index]
+}
+
 // generating number secret number
 const generateRandomNumber = function () {
   return Math.trunc(Math.random() * CONFIG.MAX + CONFIG.MIN);
 };
 
+
+// ask user for their name
+const askForName = function(playerNumber) {
+  return prompt(`Player ${playerNumber}, enter your name: `)
+}
+
+// display a player's name in the DOM
+const displayPlayerName = function(element, name) {
+  element.textContent = name
+}
+
+// Helper 4: display both players (uses helper 3)
+const displayAllPlayers = function() {
+  displayPlayerName(DOM.player1, playerNames[0])
+  displayPlayerName(DOM.player2, playerNames[1])
+}
+
 let randomSecretNumber = generateRandomNumber();
-console.log(randomSecretNumber);
+console.log(`Initial: ${randomSecretNumber}`);
 
 // selecting display message element
 const displayMessage = function (message) {
@@ -97,8 +103,24 @@ const updateHighScore = function(value) {
   DOM.highscore.textContent = value
 }
 
-// single function for resetting game
+// Initialize players
+const initializePlayers = function() {
+  for (let i = 0; i < CONFIG.MAX_PLAYERS; i++) {
+    // get default player name
+    playerNames[i] = getRandomName()
 
+    // ask for override
+    const userInput = askForName(i + 1)
+    if (userInput) {
+      playerNames[i] = userInput
+    }
+  }
+
+  // display names in dom
+  displayAllPlayers()
+}
+
+// single function for resetting game
 const resetGame = function() {
   // reset game state
   score = CONFIG.INITIAL_SCORE;
@@ -108,7 +130,7 @@ const resetGame = function() {
   DOM.guess.value = '';
   displayMessage('Start guessing...');
   updateScoreDisplay(score);
-  console.log(randomSecretNumber);
+  console.log(`After reset: ${randomSecretNumber}`)
   showSecretNumber('?');
   setGameStyle(false)
 }
@@ -140,6 +162,8 @@ const handleLose = function(userGuess) {
     updateScoreDisplay(score)
   }
 }
+
+initializePlayers()
 
 // clicking check button to check user guessed value
 DOM.checkBtn.addEventListener('click', function () {
