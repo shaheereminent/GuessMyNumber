@@ -77,8 +77,9 @@ const displayPlayerName = function(element, name) {
 
 // Helper 4: display both players (uses helper 3)
 const displayAllPlayers = function() {
-  displayPlayerName(DOM.player1, playerNames[0])
-  displayPlayerName(DOM.player2, playerNames[1])
+  for (let i = 0; i < CONFIG.MAX_PLAYERS; i ++) {
+    displayPlayerName(DOM[`player${i + 1}`], playerNames[i])
+  }
 }
 
 let randomSecretNumber = generateRandomNumber();
