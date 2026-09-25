@@ -16,39 +16,45 @@ const DOM = {
 // configuration object
 
 const CONFIG = {
-  MIN: 1,
-  MAX: 20,
-  WIN_COLOR: '#60b347',
-  LOSE_COLOR: '#222',
-  WIN_WIDTH: '30rem',
-  LOSE_WIDTH: '15rem',
-  MAX_PLAYERS: 2
-}
+    MIN: 1,
+    MAX: 20,
+    WIN_COLOR: '#60b347',
+    LOSE_COLOR: '#222',
+    WIN_WIDTH: '30rem',
+    LOSE_WIDTH: '15rem',
+    MAX_PLAYERS: 2
+};
 
 // default players name
-const defaultPlayersName = [
-  "Sprout",
-  "Mochi",
-  "Pippin",
-  "Glimmer",
-  "Cozy",
-  "Fable",
-  "Noodle",
-  "Bubbles",
-  "Chirpy",
-  "Snug"
+const defaultPlayersName =
+[
+    "Sprout",
+    "Mochi",
+    "Pippin",
+    "Glimmer",
+    "Cozy",
+    "Fable",
+    "Noodle",
+    "Bubbles",
+    "Chirpy",
+    "Snug"
 ];
+
 
 // creating score variable to keep track of it
 let score = CONFIG.MAX
 
+
 // current player initializer
-let currentPlayer = 0;
+let activePlayer = 0;
+
 
 let highScore = 0;
 
+
 // default names
 const playerNames = [] 
+
 
 // styling functions
 const setGameStyle = function(isWin) {
@@ -56,11 +62,13 @@ const setGameStyle = function(isWin) {
   DOM.number.style.width = isWin ? CONFIG.WIN_WIDTH : CONFIG.LOSE_WIDTH
 }
 
+
 // pick a random name from the default playername
 const getRandomName = function() {
   const index = Math.trunc(Math.random() * defaultPlayersName.length)
   return defaultPlayersName[index]
 }
+
 
 // generating number secret number
 const generateRandomNumber = function () {
@@ -73,10 +81,12 @@ const askForName = function(playerNumber) {
   return prompt(`Player ${playerNumber}, enter your name: `)
 }
 
+
 // display a player's name in the DOM
 const displayPlayerName = function(element, name) {
   element.textContent = name
 }
+
 
 // Helper 4: display both players (uses helper 3)
 const displayAllPlayers = function() {
@@ -84,6 +94,7 @@ const displayAllPlayers = function() {
     displayPlayerName(DOM[`player${i + 1}`], playerNames[i])
   }
 }
+
 
 let randomSecretNumber = generateRandomNumber();
 console.log(`Initial: ${randomSecretNumber}`);
@@ -93,19 +104,23 @@ const displayMessage = function (message) {
   DOM.message.textContent = message
 };
 
+
 // selecting secret number
 const showSecretNumber = function (value) {
   DOM.number.textContent = value
 };
+
 
 // selecting score element
 const updateScoreDisplay = function (value) {
   DOM.score.textContent = value
 };
 
+
 const updateHighScore = function(value) {
   DOM.highscore.textContent = value
 }
+
 
 // Initialize players
 const initializePlayers = function() {
@@ -124,6 +139,7 @@ const initializePlayers = function() {
   displayAllPlayers()
 }
 
+
 // single function for resetting game
 const resetGame = function() {
   // reset game state
@@ -139,6 +155,7 @@ const resetGame = function() {
   setGameStyle(false)
 }
 
+
 // Separate win/lose functions
 
 const handleWin = function() {
@@ -153,6 +170,7 @@ const handleWin = function() {
     }
 }
 
+
 const handleLose = function(userGuess) {
   if (score > 1) {
     displayMessage(userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!');
@@ -166,6 +184,7 @@ const handleLose = function(userGuess) {
 }
 
 initializePlayers()
+
 
 // clicking check button to check user guessed value
 DOM.checkBtn.addEventListener('click', function () {
@@ -190,6 +209,7 @@ DOM.checkBtn.addEventListener('click', function () {
       handleLose(userGuess)
     }
 });
+
 
 // clicking again button to reset the game state
 DOM.againBtn.addEventListener('click', resetGame)
