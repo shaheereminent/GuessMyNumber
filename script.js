@@ -18,7 +18,6 @@ const DOM = {
 const CONFIG = {
   MIN: 1,
   MAX: 20,
-  INITIAL_SCORE: 20,
   WIN_COLOR: '#60b347',
   LOSE_COLOR: '#222',
   WIN_WIDTH: '30rem',
@@ -41,7 +40,11 @@ const defaultPlayersName = [
 ];
 
 // creating score variable to keep track of it
-let score = CONFIG.INITIAL_SCORE;
+let score = CONFIG.MAX
+
+// current player initializer
+let currentPlayer = 0;
+
 let highScore = 0;
 
 // default names
@@ -124,7 +127,7 @@ const initializePlayers = function() {
 // single function for resetting game
 const resetGame = function() {
   // reset game state
-  score = CONFIG.INITIAL_SCORE;
+  score = CONFIG.MAX;
   randomSecretNumber = generateRandomNumber();
 
   // reset game ui
@@ -152,9 +155,7 @@ const handleWin = function() {
 
 const handleLose = function(userGuess) {
   if (score > 1) {
-    displayMessage(
-      userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!',
-    );
+    displayMessage(userGuess > randomSecretNumber ? '📈 Too high!' : '📉 Too low!');
     score --
     updateScoreDisplay(score)
   } else {

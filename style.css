@@ -56,6 +56,22 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
+/* PLAYER NAMES */
+.players {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3rem;
+  font-size: 1.6rem;
+  z-index: 10;
+}
+
+.players p {
+  color: #eee;
+}
+
 .number {
   background: #eee;
   color: #333;
@@ -118,22 +134,6 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.players {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 1rem 0;
-}
-
-.player1, .player2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.player1.active, .player2.active {
-  background: #60b347;
-  color: white;
+.active {
+  background-color: red;
 }
